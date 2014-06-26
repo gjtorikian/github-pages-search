@@ -20,3 +20,19 @@ namespace :deploy do
     system "heroku maintenance:off --app #{app}"
   end
 end
+
+def in_tmpdir
+  path = File.expand_path "#{Dir.tmpdir}/indexer/repos/#{Time.now.to_i}#{rand(1000)}/"
+  FileUtils.mkdir_p path
+  puts "Directory created at: #{path}"
+  yield path
+ensure
+  FileUtils.rm_rf(path) if File.exists?(path)
+end
+
+desc 'Manually index a GitHub Pages repository'
+task :reindex do
+  in_tmpdir do |tmpdir|
+    IndexJob.perform(tmpdir, ENV['repo'])
+  end
+end
