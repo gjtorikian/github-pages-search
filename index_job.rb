@@ -43,6 +43,7 @@ class IndexJob
   end
 
   def self.clone_url_with_token(token, repo)
-    "https://#{token}:x-oauth-basic@github.com/#{repo}.git"
+    server = ENV['ENTERPRISE'] || "github.com"
+    "https://#{token}:x-oauth-basic@#{ENV['ENTERPRISE']}/#{repo}.git"
   end
 end

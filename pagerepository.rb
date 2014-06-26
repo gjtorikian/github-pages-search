@@ -8,7 +8,7 @@ class PageRepository
   def initialize(options={})
     index  'pages'
     type   'page'
-    client Elasticsearch::Client.new url: ENV['ELASTICSEARCH_URL'] || ENV['BOXEN_ELASTICSEARCH_URL'] || 'http://localhost:9200', log: true
+    client Elasticsearch::Client.new url: ENV['ELASTICSEARCH_URL'] || ENV['BOXEN_ELASTICSEARCH_URL'] || ENV['BONSAI_URL'] || 'http://localhost:9200', log: true
   end
 
   klass Page
