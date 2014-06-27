@@ -8,7 +8,7 @@ class IndexJob
   def self.perform(tmpdir, repo)
     clone_repo(repo, tmpdir)
     Dir.chdir "#{tmpdir}/#{repo}" do
-      Dir.glob("**/*.html") do |html_file|
+      Dir.glob("**/*.html").map(&File.method(:realpath)).each do |html_file|
         html_file_contents = File.read(html_file)
         pismo_doc = Pismo::Document.new(html_file_contents, :reader => :cluster)
 
