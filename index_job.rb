@@ -1,5 +1,5 @@
 require 'git'
-require 'pismo'
+require 'nokogiri'
 require './page'
 
 class IndexJob
@@ -10,18 +10,12 @@ class IndexJob
     Dir.chdir "#{tmpdir}/#{repo}" do
       Dir.glob("**/*.html").map(&File.method(:realpath)).each do |html_file|
         html_file_contents = File.read(html_file)
-        pismo_doc = Pismo::Document.new(html_file_contents, :reader => :cluster)
 
-        begin
-          pismo_doc.body
-        rescue NoMethodError
-          # no op:
-          # NoMethodError: undefined method `values' for #<Set: {}>
-          # from /vendor/gems/ruby/2.1.0/gems/sanitize-3.0.0/lib/sanitize.rb:92:in `initialize'
-          # and yet, somehow, calling it again below fixes the problem.
-        end
+        doc = Nokogiri::HTML(html_file_contents)
+        text = doc.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' article-body ')]").text()
+        title = doc.xpath("//title").text()
 
-        page = Page.new id: "#{repo}::#{html_file}", title: pismo_doc.title, body: pismo_doc.body
+        page = Page.new id: "#{repo}::#{html_file}", title: title, body: text
 
         GitHubPagesSearch::repository.save(page)
       end
