@@ -33,6 +33,6 @@ end
 desc 'Manually index a GitHub Pages repository'
 task :reindex do
   in_tmpdir do |tmpdir|
-    IndexJob.perform(tmpdir, ENV['repo'])
+    IndexJob.perform(tmpdir, ENV['REPO'])
   end
 end
