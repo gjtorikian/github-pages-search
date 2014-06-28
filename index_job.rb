@@ -9,13 +9,15 @@ class IndexJob
     clone_repo(repo, tmpdir)
     Dir.chdir "#{tmpdir}/#{repo}" do
       Dir.glob("**/*.html").map(&File.method(:realpath)).each do |html_file|
+        relative_path = html_file.match(/#{repo}\/(.+)/)[1]
         html_file_contents = File.read(html_file)
 
+        # TODO: make these configurable
         doc = Nokogiri::HTML(html_file_contents)
         text = doc.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' article-body ')]").text()
         title = doc.xpath("//title").text()
 
-        page = Page.new id: "#{repo}::#{html_file}", title: title, body: text
+        page = Page.new id: "#{repo}::#{relative_path}", title: title, body: text, path: relative_path, last_updated: "03/06/1984"
 
         GitHubPagesSearch::repository.save(page)
       end

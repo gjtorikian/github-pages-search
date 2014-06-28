@@ -17,10 +17,12 @@ class PageRepository
     mapping do
       indexes :title, type: 'string', analyzer: 'snowball'
       indexes :body, type: 'string', analyzer: 'snowball'
+      indexes :path, type: 'string', index: :not_analyzed
+      indexes :updated_at, type: 'date', index: :not_analyzed
     end
   end
 
-  create_index!
+  create_index! force: true
 
   def deserialize(document)
     Page.new document['_source'].merge('id' => document['_id'])

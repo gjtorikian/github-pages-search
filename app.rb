@@ -86,7 +86,7 @@ class GitHubPagesSearch < Sinatra::Base
 
     result[:results] = []
     @pages.each_with_hit do |page, hit|
-      result[:results] << {:result => (hit.highlight && hit.highlight.size > 0 ? hit.highlight.body.first : page.attributes["body"][0..80]), :title => page.attributes["title"], :last_updated => "03/06/1984" }
+      result[:results] << {:result => (hit.highlight && hit.highlight.size > 0 ? hit.highlight.body.first : page.attributes["body"][0..80]), :title => page.attributes["title"], :path => page.attributes["path"], :last_updated => page.attributes["last_updated"] }
     end
 
     result[:total] = @pages.total
