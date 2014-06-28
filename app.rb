@@ -29,7 +29,7 @@ class GitHubPagesSearch < Sinatra::Base
       Resque.redis = Redis.new
     end
 
-    set :allow_origin, 'https://help.github.com,https://github.com,http://0.0.0.0:4000'
+    set :allow_origin, :all
 
     # HTTP methods allowed
     set :allow_methods, [:get]
