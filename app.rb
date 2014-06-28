@@ -77,7 +77,7 @@ class GitHubPagesSearch < Sinatra::Base
                 end
                end.(params[:q], params[:t]),
 
-               sort: [{created_at: {order: 'desc'}}],
+               # sort: [{created_at: {order: 'desc'}}],
 
                size: settings.per_page,
                from: settings.per_page * (@page-1),
