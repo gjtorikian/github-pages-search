@@ -29,11 +29,6 @@ class GitHubPagesSearch < Sinatra::Base
       Resque.redis = Redis.new
     end
 
-    # dat CORS
-    set :allow_origin, :all #"https://help.github.com,https://github.com,http://0.0.0.0:4000"
-
-    # HTTP methods allowed
-    set :allow_methods, [:get]
   end
 
   before do
@@ -55,6 +50,11 @@ class GitHubPagesSearch < Sinatra::Base
   end
 
   get "/search" do
+    cross_origin :allow_origin => 'https://help.github.com,https://github.com,http://0.0.0.0:4000',
+                 :allow_methods => [:get],
+                 :allow_credentials => false,
+                 :max_age => "60"
+
     content_type :json
     @page  = [ params[:p].to_i, 1 ].max
 
