@@ -28,14 +28,6 @@ class GitHubPagesSearch < Sinatra::Base
     else
       Resque.redis = Redis.new
     end
-
-    set :allow_origin, :all
-
-    # HTTP methods allowed
-    set :allow_methods, [:get]
-
-    # Allow cookies to be sent with the requests
-    set :allow_credentials, true
   end
 
   before do
@@ -57,7 +49,7 @@ class GitHubPagesSearch < Sinatra::Base
   end
 
   get "/search" do
-    cross_origin
+    cross_origin :allow_origin => '*'
 
     content_type :json
     @page  = [ params[:p].to_i, 1 ].max
