@@ -120,5 +120,5 @@ DEPENDENCIES
   resque (~> 1.25)
   shotgun
   sinatra (= 1.4.2)
-  sinatra-cross_origin
+  sinatra-cross_origin (~> 0.3)
   unicorn (~> 4.8)
