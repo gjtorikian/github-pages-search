@@ -30,7 +30,7 @@ class GitHubPagesSearch < Sinatra::Base
     end
 
     # dat CORS
-    set :allow_origin, "https://help.github.com,https://github.com,http://0.0.0.0:4000"
+    set :allow_origin, :all #"https://help.github.com,https://github.com,http://0.0.0.0:4000"
 
     # HTTP methods allowed
     set :allow_methods, [:get]
