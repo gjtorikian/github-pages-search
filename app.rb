@@ -5,6 +5,7 @@ require "resque"
 require "redis"
 require "openssl"
 require "base64"
+require 'sinatra/cross_origin'
 
 require './page'
 require './pagerepository'
