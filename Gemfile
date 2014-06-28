@@ -10,6 +10,7 @@ gem 'nokogiri', '~> 1.6'
 # gem 'pismo', '~> 0.7.4'
 gem 'resque', '~> 1.25'
 gem 'sinatra', '1.4.2'
+gem 'sinatra-cross_origin', '~> 0.3'
 gem 'unicorn', '~> 4.8'
 
 group :development do

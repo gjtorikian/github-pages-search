@@ -11,6 +11,8 @@ require './pagerepository'
 require './index_job'
 
 class GitHubPagesSearch < Sinatra::Base
+  register Sinatra::CrossOrigin
+
   set :root, File.dirname(__FILE__)
 
   set :repository, PageRepository.new
@@ -25,6 +27,12 @@ class GitHubPagesSearch < Sinatra::Base
     else
       Resque.redis = Redis.new
     end
+
+    # dat CORS
+    set :allow_origin, "https://help.github.com", "https://github.com", "http://0.0.0.0:4000"
+
+    # HTTP methods allowed
+    set :allow_methods, [:get]
   end
 
   before do
@@ -68,7 +76,7 @@ class GitHubPagesSearch < Sinatra::Base
                 end
                end.(params[:q], params[:t]),
 
-              #  sort: [{created_at: {order: 'desc'}}],
+               sort: [{created_at: {order: 'desc'}}],
 
                size: settings.per_page,
                from: settings.per_page * (@page-1),
