@@ -78,7 +78,7 @@ class GitHubPagesSearch < Sinatra::Base
                size: settings.per_page,
                from: settings.per_page * (@page-1),
 
-               highlight: { fields: { body: { fragment_size: 160, number_of_fragments: 1, pre_tags: ['<em class="hl">'], post_tags: ['</em>'] } } }
+               highlight: { fields: { body: { fragment_size: 160, number_of_fragments: 1, pre_tags: ['<span class="search-term">'], post_tags: ['</span>'] } } }
 
     result = {}
 
