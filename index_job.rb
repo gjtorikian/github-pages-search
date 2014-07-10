@@ -16,8 +16,9 @@ class IndexJob
         doc = Nokogiri::HTML(html_file_contents)
         text = doc.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' article-body ')]").text()
         title = doc.xpath("//title").text()
+        last_updated = doc.xpath("//[contains(concat(' ',normalize-space(@class),' '),'last-modified-at-date')]")
 
-        page = Page.new id: "#{repo}::#{relative_path}", title: title, body: text, path: relative_path, last_updated: "03/06/1984"
+        page = Page.new id: "#{repo}::#{relative_path}", title: title, body: text, path: relative_path, last_updated: last_updated
 
         GitHubPagesSearch::repository.save(page)
       end
