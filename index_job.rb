@@ -8,6 +8,7 @@ class IndexJob
   def self.perform(tmpdir, repo)
     clone_repo(repo, tmpdir)
     Dir.chdir "#{tmpdir}/#{repo}" do
+      @git_dir.checkout "gh-pages"
       Dir.glob("**/*.html").map(&File.method(:realpath)).each do |html_file|
         relative_path = html_file.match(/#{repo}\/(.+)/)[1]
         html_file_contents = File.read(html_file)
