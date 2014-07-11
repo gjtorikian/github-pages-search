@@ -32,7 +32,6 @@ end
 
 desc 'Manually index a GitHub Pages repository'
 task :reindex do
-  GitHubPagesSearch::repository.create_index! force: true
   in_tmpdir do |tmpdir|
     IndexJob.perform(tmpdir, ENV['REPO'])
   end

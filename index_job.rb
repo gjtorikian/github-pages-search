@@ -13,6 +13,8 @@ class IndexJob
   ]
 
   def self.perform(tmpdir, repo)
+    GitHubPagesSearch::repository.create_index! force: true
+
     clone_repo(repo, tmpdir)
     Dir.chdir "#{tmpdir}/#{repo}" do
       @git_dir.checkout "gh-pages"
