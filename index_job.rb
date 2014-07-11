@@ -13,13 +13,13 @@ class IndexJob
         relative_path = html_file.match(/#{repo}\/(.+)/)[1]
         html_file_contents = File.read(html_file)
 
-        # TODO: make these configurable
+        # TODO: make these configurable?
         doc = Nokogiri::HTML(html_file_contents)
-        text = doc.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' article-body ')]").text().strip
+        body = doc.xpath("//body").text().strip
         title = doc.xpath("//title").text().strip
-        last_updated = doc.xpath("//span[contains(concat(' ',normalize-space(@class),' '),'last-modified-at-date')]").strip
+        last_updated = doc.xpath("//span[contains(concat(' ',normalize-space(@class),' '),'last-modified-at-date')]").text().strip
 
-        page = Page.new id: "#{repo}::#{relative_path}", title: title, body: text, path: relative_path, last_updated: last_updated
+        page = Page.new id: "#{repo}::#{relative_path}", title: title, body: body, path: relative_path, last_updated: last_updated
 
         GitHubPagesSearch::repository.save(page)
       end
