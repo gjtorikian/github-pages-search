@@ -22,7 +22,7 @@ class IndexJob
 
         # TODO: make these configurable?
         doc = Nokogiri::HTML(html_file_contents)
-        next if doc.css("meta[http-equiv='refresh']")
+        next unless doc.css("meta[http-equiv='refresh']").empty?
 
         title = doc.xpath("//title").text().strip
         last_updated = doc.xpath("//span[contains(concat(' ',normalize-space(@class),' '),'last-modified-at-date')]").text().strip
